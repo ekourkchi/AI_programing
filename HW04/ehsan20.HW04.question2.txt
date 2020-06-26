@@ -1,0 +1,134 @@
+
+#########################################
+# by Ehsan Kourkchi
+# To do the Assignment 4 ---  ICS361
+# Computer Science, University of Hawaii
+# November 2015
+# Email: ekourkchi@gmail.com
+# 
+# This is the answers to question 1
+#########################################
+
+##
+## Please load "ehsan20.HW04.q1.pl" in your prolog.
+
+?- consult('ehsan20.HW04.q2.pl').
+
+
+#  Situation #1:
+#
+#    You have six colored balls: 2 green, 2 blue and 2 yellow
+#    No balls of the same color may be adjacent to one another.
+
+
+?- situation1(LIST).
+LIST = [green, blue, green, yellow, blue, yellow] ;
+LIST = [green, blue, yellow, green, blue, yellow] ;
+LIST = [green, blue, yellow, green, yellow, blue] ;
+LIST = [green, blue, yellow, blue, green, yellow] ;
+LIST = [green, blue, yellow, blue, yellow, green] ;
+LIST = [green, yellow, green, blue, yellow, blue] ;
+LIST = [green, yellow, blue, green, blue, yellow] ;
+LIST = [green, yellow, blue, green, yellow, blue] ;
+LIST = [green, yellow, blue, yellow, green, blue] ;
+LIST = [green, yellow, blue, yellow, blue, green] ;
+LIST = [blue, green, blue, yellow, green, yellow] ;
+LIST = [blue, green, yellow, green, blue, yellow] ;
+LIST = [blue, green, yellow, green, yellow, blue] ;
+LIST = [blue, green, yellow, blue, green, yellow] ;
+LIST = [blue, green, yellow, blue, yellow, green] ;
+LIST = [blue, yellow, green, blue, green, yellow] ;
+LIST = [blue, yellow, green, blue, yellow, green] ;
+LIST = [blue, yellow, green, yellow, green, blue] ;
+LIST = [blue, yellow, green, yellow, blue, green] ;
+LIST = [blue, yellow, blue, green, yellow, green] ;
+LIST = [yellow, green, blue, green, blue, yellow] ;
+LIST = [yellow, green, blue, green, yellow, blue] ;
+LIST = [yellow, green, blue, yellow, green, blue] ;
+LIST = [yellow, green, blue, yellow, blue, green] ;
+LIST = [yellow, green, yellow, blue, green, blue] ;
+LIST = [yellow, blue, green, blue, green, yellow] ;
+LIST = [yellow, blue, green, blue, yellow, green] ;
+LIST = [yellow, blue, green, yellow, green, blue] ;
+LIST = [yellow, blue, green, yellow, blue, green] ;
+LIST = [yellow, blue, yellow, green, blue, green] ;
+false.
+
+
+# Situation #2:
+#
+#    You have six colored balls: 4 black, 1 red and 1 blue.
+#    There are no more than 2 black balls in a row.
+
+
+?- situation2(LIST).
+LIST = [red, black, black, blue, black, black] ;
+LIST = [blue, black, black, red, black, black] ;
+LIST = [black, red, black, blue, black, black] ;
+LIST = [black, red, black, black, blue, black] ;
+LIST = [black, blue, black, red, black, black] ;
+LIST = [black, blue, black, black, red, black] ;
+LIST = [black, black, red, blue, black, black] ;
+LIST = [black, black, red, black, blue, black] ;
+LIST = [black, black, red, black, black, blue] ;
+LIST = [black, black, blue, red, black, black] ;
+LIST = [black, black, blue, black, red, black] ;
+LIST = [black, black, blue, black, black, red] ;
+false.
+
+
+#  Situation #3:
+#
+#    You have eight colored balls: 1 black, 2 white, 2 red and 3 green.
+#    The balls in positions 2 and 3 are not green.
+#    The balls in positions 4 and 8 are the same color.
+#    The balls in positions 1 and 7 are of different colors.
+#    There is a green ball to the left of every red ball.
+#    A white ball is neither first nor last.
+#    The balls in positions 6 and 7 are not red.
+
+
+?- situation3(LIST).
+LIST = [green, red, black, green, red, white, white, green] ;
+LIST = [green, red, white, green, red, black, white, green] ;
+LIST = [green, red, white, green, red, white, black, green] ;
+false.
+
+
+
+##############################
+#### Error Handling Part: ####
+##############################
+
+?- situation1(a).
+Please give a list as the argument.
+true.
+
+
+?- situation2(b).
+Please give a list as the argument.
+true.
+
+?- situation3(4).
+Please give a list as the argument.
+true.
+
+
+?- color([red, white, blue, yellow], Red, [1,3] , Blue, Yellow, B, W).
+The third argument must be either an integer or a variable.
+true.
+
+
+?- color([red, white, blue, yellow], Red, Green, Blue, Yellow, Black, a).
+The seventh argument must be either an integer or a variable.
+true.
+
+
+?- color([red, white, blue, yellow], Red, a, Blue, Yellow, Black, 2).
+The third argument must be either an integer or a variable.
+true.
+
+
+?- color(a, Red, Green, Blue, Yellow, Black, White).
+The first argument must be a list.
+true.

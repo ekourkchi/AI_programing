@@ -1,0 +1,47 @@
+
+*** These modified files were found in JOE when it aborted on Sun Nov 29 01:04:02 2015
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+release_year(star_wars1, 1999).
+release_year(star_wars2, 2002).
+release_year(star_wars3, 2005).
+release_year(star_wars4, 1977).
+release_year(star_wars5, 1980).
+release_year(star_wars6, 1983).
+release_year(star_wars7, 2015).
+
+release_year(star_trek1, 1979).
+release_year(star_trek2, 1982).
+release_year(star_trek3, 1984).
+release_year(star_trek4, 1986).
+release_year(star_trek5, 1989).
+release_year(star_trek6, 1991).
+
+
+*** File '(Unnamed)'
+n
+
+*** File '(Unnamed)'
+Sean
+Ehsan
+gaia
+gaia
+scamp
+ehsan
+np
+np
+when
+wp
+
+*** File '(Unnamed)'
+DR.master.bash
+mathgrammar.pl
+mathgrammar.pl
+ehsan20.HW05.pl
+ehsan20.HW05.pl
+ehsan20.HW05.pl
+ehsan20.HW05.pl
+ehsan20.HW05.pl
+ehsan20.HW05.pl
+ehsan20.HW05.pl

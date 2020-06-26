@@ -1,0 +1,389 @@
+
+#########################################
+# by Ehsan Kourkchi
+# To do the Assignment 5 ---  ICS361
+# Computer Science, University of Hawaii
+# November 2015
+# Email: ekourkchi@gmail.com
+# 
+# Natural Language Processing in Prolog
+#########################################
+% 
+%  The code has been developed by Ehsan K. to answer 
+%  the assignment 5, and is available in this file: ehsan20.HW05.pl
+%  
+%  1) All the requested features are covered.
+%     - If the answer is positive, the returned answer would be formatted and returned
+%     - If the answer is negative or it does not comply with what is available in the database,
+%       then the query would be failed. In this case we first make sure that the minimum grammatical 
+%       rules are met in the given query.
+%     - If the grammar of the query is wrong, then a proper message is returned and the query would 
+%       not be further evaluated against the database.
+%  1.5) It understands the difference between, an actor, and an actress.
+%  2) Extra features are provided for extra points.
+%     - User can ask about the release year of a movie
+%     - The release year can be also added to the end of each sentence
+%     - User can also ask about the relative release time of movies
+%  3) For example of how to query for the extra features, see the end of this transcript (ehsan20.HW05.txt).
+%
+
+#############################################
+#
+# Testing the regular features (examples): 
+#
+#############################################
+
+?- top([did, mark, hamill, play, spock]).
+false.
+
+?- top([did, william, shatner, play, luke, skywalker]).
+false.
+
+## If Mark Hamill has played in multiple movies it returns multiple "Yes" answers, when back-tracking.
+?- top([mark, hamill, plays, luke, skywalker, right]).
+Yes, that's right. 
+true ;
+Yes, that's right. 
+true ;
+Yes, that's right. 
+true ;
+Yes, that's right. 
+true ;
+false.
+
+
+## When we specify the movie name, it returns just one answer.
+?- top([mark, hamill, plays, luke, skywalker, in, star, wars, iv, right]).
+Yes, that's right. 
+true ;
+false.
+
+
+?- top([did, mark, hamill, play, Spock, in, star, trek, iii]).
+false.
+
+?- top([did, mark, hamill, play, luke, skywalker, in, star, wars, iv]).
+Yes. 
+true ;
+false.
+
+
+
+?- top([did, william, shatner, direct, star, trek, v]).
+Yes. 
+true .
+
+
+?- top([is, it, true, that, william, shatner, is, an, actor]).
+Yes, that's true.
+true .
+
+
+?- top([is, it, true, that, william, shatner, is, an, actor, and, mark, hamill, is, an, actor]).
+Yes, that's true.
+true .
+
+
+?- top([is, it, true, that, natalie, portman, acts, in, star, wars, i]).
+Yes, that's true.
+true ;
+false.
+
+
+
+?- top([william, shatner, is, a, director, mark, hamill, is, an, actor, and, leonard, nimoy, is, a, director, right]).
+Yes, that's right. 
+true ;
+false.
+
+
+## Since "leonard nimoy" has played in 6 different Star Trek movies, we get six same answers, when back tracking.
+?- top([who, is, the, actor, for, spock]).
+The person you're looking for is "leonard nimoy".
+true ;
+false.
+
+
+?- top([who, is, the, actor, for, obi-wan, kenobi]).
+The person you're looking for is "alec guinness".
+true ;
+The person you're looking for is "ewan mcGregor".
+true ;
+false.
+
+-----------------------------------------------------------------
+
+?- top([who, is, the, actor, for, anakin, skywalker]).
+The person you're looking for is "sebastian shaw".
+true ;
+The person you're looking for is "jake lloyd".
+true ;
+The person you're looking for is "hayden christensen".
+true ;
+false.
+
+
+?- top([who, is, the, actor, for, anakin, skywalker, in, star, wars, iii]).
+The person you're looking for is "hayden christensen".
+true ;
+false.
+
+
+?- top([who, is, the, actor, for, anakin, skywalker, in, 1999]).
+The person you're looking for is "jake lloyd".
+true ;
+false.
+
+
+
+-----------------------------------------------------------------
+
+?- top([what, is, the, title, of, star, wars, ii]).
+It is "attack of the clones".
+true ;
+false.
+
+
+?- top([who, is, the, director, of, star, wars, ii]).
+The person you're looking for is "george lucas".
+true ;
+false.
+
+
+
+
+?- top([who, is, the, character, of, william, shatner]).
+The person you're looking for is "captain kirk".
+true ;
+false.
+
+
+
+
+?- top([who, is, the, character, of, natalie, portman]).
+The person you're looking for is "queen amidala".
+true ;
+The person you're looking for is "padme".
+true ;
+false.
+
+
+?- top([a, new, hope, is, the, title, of, star, wars, iv]).
+Sounds right :) 
+true ;
+false.
+
+
+?- top([who, is, an, actress]).
+The person you're looking for is "carrie fisher".
+true ;
+The person you're looking for is "natalie portman".
+true ;
+The person you're looking for is "pernilla august".
+true ;
+The person you're looking for is "keisha castle-hughes".
+true ;
+The person you're looking for is "daisy ridley".
+true ;
+The person you're looking for is "billie lourd".
+true ;
+The person you're looking for is "gwendoline christie".
+true ;
+The person you're looking for is "majel barrett".
+true ;
+The person you're looking for is "nichelle nichols".
+true ;
+The person you're looking for is "persis khambatta".
+true ;
+The person you're looking for is "grace lee whitney".
+true ;
+The person you're looking for is "bibi besch".
+true ;
+The person you're looking for is "kirstie alley".
+true ;
+The person you're looking for is "robin curtis".
+true ;
+The person you're looking for is "jane wyatt".
+true ;
+The person you're looking for is "catherine hicks".
+true ;
+The person you're looking for is "cynthia gouw".
+true ;
+The person you're looking for is "kim cattrall".
+true ;
+false.
+
+
+?- top([who, is, a, director]).
+The person you're looking for is "irvin kershner".
+true ;
+The person you're looking for is "george lucas".
+true ;
+The person you're looking for is "richard marquand".
+true ;
+The person you're looking for is "jj abrams".
+true ;
+The person you're looking for is "robert wise".
+true ;
+The person you're looking for is "nicholas meyer".
+true ;
+The person you're looking for is "leonard nimoy".
+true ;
+The person you're looking for is "william shatner".
+true ;
+false.
+
+
+
+#############################################
+#
+# Ungrammatical queries (examples): 
+#
+#############################################
+
+
+# wrong: plays
+?- top([did, william, shatner, plays, spock]).
+I don't get it. Check your grammar! 
+false.
+
+
+# wrong: a actor
+?- top([is, it, true, that, spock, is, a, actor]).
+I don't get it. Check your grammar! 
+false.
+
+# wrong: play
+?- top([mark, hamill, play, chewbacca]).
+I don't get it. Check your grammar! 
+false.
+
+# wrong: an director
+?- top([william, shatner, is, an, director, right]).
+I don't get it. Check your grammar! 
+false.
+
+
+# wrong: a actor
+# Even it works when one sentence out of a few is grammatically wrong
+?- top([luke, skywalker, is, a, director, spock, is, a, actor, and, leonard, nimoy, is, a, director, right]).
+I don't get it. Check your grammar! 
+false.
+
+# wrong: a actress
+?- top([who, is, a, actress]).
+I don't get it. Check your grammar! 
+false.
+
+
+?- top([william, shatner, act, in, star, trek, i]).
+I don't get it. Check your grammar! 
+false.
+
+
+
+# It does not evaluate the query against the database, if the grammar is wrong
+# In this case, "spock" is a character and not an actor
+?- top([did, spock, acts, in, star, trek, i]).
+I don't get it. Check your grammar! 
+false.
+
+
+
+********************************************
+***
+*** Extra features (query examples): 
+***
+********************************************
+
+?- top([what, movie, was, released, in, 1986]).
+It is "star trek iv".
+true ;
+false.
+
+
+
+?- top([when, was, star, wars, ii, released]).
+2002.
+true ;
+false.
+
+
+
+?- top([what, movie, was, released, after, star, trek, iii]).
+It is "star wars i".
+true ;
+It is "star wars ii".
+true ;
+It is "star wars iii".
+true ;
+It is "star wars vii".
+true ;
+It is "star trek iv".
+true ;
+It is "star trek v".
+true ;
+It is "star trek vi".
+true ;
+false.
+
+
+
+?- top([what, movie, was, released, before, 1987]).
+It is "star wars iv".
+true ;
+It is "star wars v".
+true ;
+It is "star wars vi".
+true ;
+It is "star trek i".
+true ;
+It is "star trek ii".
+true ;
+It is "star trek iii".
+true ;
+It is "star trek iv".
+true ;
+false.
+
+
+# Number can be entered in digital format
+?- top([what, movie, was, released, 25, years, after, star, wars, v]).
+It is "star wars iii".
+true ;
+false.
+
+
+
+# Even, you can enter a number in words and it still understands it
+?- top([what, movie, was, released, twenty, five, years, after, star, wars, v]).
+It is "star wars iii".
+true ;
+false.
+
+
+
+?- top([what, movie, was, released, two, years, before, star, trek, vi]).
+It is "star trek v".
+true ;
+false.
+
+
+
+?- top([who, is, the, actor, for, anakin, skywalker, in, 1999]).
+The person you're looking for is "jake lloyd".
+true ;
+false.
+
+
+?- top([william, shatner, played, in, star, trek, i, in, 1979]).
+Sounds right :) 
+true ;
+false.
+
+
+
+
+
+
+

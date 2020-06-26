@@ -1,0 +1,154 @@
+
+#########################################
+# by Ehsan Kourkchi
+# To do the Assignment 4 ---  ICS361
+# Computer Science, University of Hawaii
+# November 2015
+# Email: ekourkchi@gmail.com
+# 
+# This is the answers to question 1
+#########################################
+
+##
+## Please load "ehsan20.HW04.q1.pl" in your prolog.
+
+?- consult('ehsan20.HW04.q1.pl').
+
+
+####
+## These are a bunch of test cases:
+
+?- listlength([1,5,3,6], N).
+N = 4.
+
+?- listlength([0,[1,5],8], N).
+N = 3.
+
+?- listlength([], N).
+N = 0.
+
+?- listlength([4,3,5], 3).
+true.
+
+?- listlength([4], 2).
+false.
+
+##############################
+#### Error Handling Part: ####
+##############################
+
+## error handling
+?- listlength(1, 2).
+The first argument must be a list.
+true.
+
+## error handling
+?- listlength([1,2], a).
+The second argument must be either an integer or a variable.
+true.
+
+#################################
+## These are the examples from the assignment:
+#################################
+
+
+?- listlength([9, 5, 6, 4],L).
+L = 4.
+
+?- listlength([], 0).
+true.
+
+?- listlength(List, 0).
+List = [] .
+
+?- listlength([5, [6, 7, 8]], L).
+L = 2.
+
+#########################################
+## What happens if you do this, and why?
+#########################################
+?-  listlength(L, 3).
+L = [_G278, _G281, _G284] .
+
+## As seen in this example, prolog assign a list of 3 temporary variables to L. These variables do not have 
+## any value at this point. This is the way prolog works; creating internal variables and trying to unifying them
+## in ordr to make the predicate true. In this case, any 3 member list will do that.
+## 
+## If we ask prolog to find more lists, it runs an infinite loop which never ends. That's 
+## because the number of lists with 3 eleements are infinit.
+## Since, prolof follow a depth-first search to find the best match, it creeps over the entire depth of tree, and at some point even
+## it creates some lists with more than 3 members, however it fails in each step, not meeting the required criteria.
+## In ordr to avoid the infinit loop through the depth of the tree, we may use cut (!) at the end of the predicate defnitions, to avoid any 
+## further search.
+##
+## Have a look at the following script showing the trace of this run:
+
+Redo: (9) listlength(_G2597, _G2607) ? creep
+   Call: (10) listlength(_G2600, _G2610) ? creep
+   Call: (11) _G2600\=[] ? creep
+   Fail: (11) _G2600\=[] ? creep
+   Redo: (10) listlength(_G2600, _G2610) ? creep
+   Call: (11) nonvar(_G2609) ? creep
+   Fail: (11) nonvar(_G2609) ? creep
+   Redo: (10) listlength(_G2600, _G2610) ? creep
+   Exit: (10) listlength([], 0) ? creep
+   Call: (10) _G2612 is 0+1 ? creep
+   Exit: (10) 1 is 0+1 ? creep
+   Exit: (9) listlength([_G2599], 1) ? creep
+   Call: (9) _G2615 is 1+1 ? creep
+   Exit: (9) 2 is 1+1 ? creep
+   Exit: (8) listlength([_G2596, _G2599], 2) ? creep
+   Call: (8) _G2618 is 2+1 ? creep
+   Exit: (8) 3 is 2+1 ? creep
+   Exit: (7) listlength([_G2593, _G2596, _G2599], 3) ? creep
+   Call: (7) 3 is 3+1 ? creep
+   Fail: (7) 3 is 3+1 ? creep
+   Redo: (10) listlength(_G2600, _G2610) ? creep
+   Call: (11) listlength(_G2603, _G2613) ? creep
+   Call: (12) _G2603\=[] ? creep
+   Fail: (12) _G2603\=[] ? creep
+   Redo: (11) listlength(_G2603, _G2613) ? creep
+   Call: (12) nonvar(_G2612) ? creep
+   Fail: (12) nonvar(_G2612) ? creep
+   Redo: (11) listlength(_G2603, _G2613) ? creep
+   Exit: (11) listlength([], 0) ? creep
+   Call: (11) _G2615 is 0+1 ? creep
+   Exit: (11) 1 is 0+1 ? creep
+   Exit: (10) listlength([_G2602], 1) ? creep
+   Call: (10) _G2618 is 1+1 ? creep
+   Exit: (10) 2 is 1+1 ? creep
+   Exit: (9) listlength([_G2599, _G2602], 2) ? creep
+   Call: (9) _G2621 is 2+1 ? creep
+   Exit: (9) 3 is 2+1 ? creep
+   Exit: (8) listlength([_G2596, _G2599, _G2602], 3) ? creep
+   Call: (8) _G2624 is 3+1 ? creep
+   Exit: (8) 4 is 3+1 ? creep
+   Exit: (7) listlength([_G2593, _G2596, _G2599, _G2602], 4) ? creep
+   Call: (7) 3 is 4+1 ? creep
+   Fail: (7) 3 is 4+1 ? creep
+   Redo: (11) listlength(_G2603, _G2613) ? creep
+   Call: (12) listlength(_G2606, _G2616) ? creep
+   Call: (13) _G2606\=[] ? creep
+   Fail: (13) _G2606\=[] ? creep
+   Redo: (12) listlength(_G2606, _G2616) ? creep
+   Call: (13) nonvar(_G2615) ? creep
+   Fail: (13) nonvar(_G2615) ? creep
+   Redo: (12) listlength(_G2606, _G2616) ? creep
+   Exit: (12) listlength([], 0) ? creep
+   Call: (12) _G2618 is 0+1 ? creep
+   Exit: (12) 1 is 0+1 ? creep
+   Exit: (11) listlength([_G2605], 1) ? creep
+   Call: (11) _G2621 is 1+1 ? creep
+   Exit: (11) 2 is 1+1 ? creep
+   Exit: (10) listlength([_G2602, _G2605], 2) ? creep
+   Call: (10) _G2624 is 2+1 ? creep
+   Exit: (10) 3 is 2+1 ? creep
+   Exit: (9) listlength([_G2599, _G2602, _G2605], 3) ? creep
+   Call: (9) _G2627 is 3+1 ? creep
+   Exit: (9) 4 is 3+1 ? creep
+   Exit: (8) listlength([_G2596, _G2599, _G2602, _G2605], 4) ? creep
+   Call: (8) _G2630 is 4+1 ? creep
+   Exit: (8) 5 is 4+1 ? creep
+   Exit: (7) listlength([_G2593, _G2596, _G2599, _G2602, _G2605], 5) ? creep
+   Call: (7) 3 is 5+1 ?
+

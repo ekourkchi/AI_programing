@@ -1,0 +1,77 @@
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ; This code is written by Ehsan Kourkchi
+;; ; To do the Assignment 6 ---  ICS361
+;; ; Computer Science, University of Hawaii
+;; ; December 2015
+;; ; Email: ekourkchi@gmail.com
+;; ;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+-----------------------------------------------------------------------
+D. Bonus Points (10 points)
+-----------------------------------------------------------------------
+
+
+What do the above exercises tell you about the strengths and weaknesses of LISP and Prolog, with regards to representation and search? Please be specific, and write in full grammatical sentences.
+
+
+-----------------------------------------------------------------------
+* Comparing general features:
+-----------------------------------------------------------------------
+
+
+PROLOG:
+
+It's a logical programming language and it is close to the human language. Therefore, it is easy to write the logic of the program as a set of logical predicates, as we talk about them in our daily language. When programing in Prolog, it is easy to set up the predicates as it is desired, however it is hard to trace and debug sometimes. This is because of the complexity of tracing, recursions and unification, as the program gets more complicated.  I found Prolog super powerful when parsing the human natural language. I think human language processing might be more difficult when using other programming languages (i.e. some dedicated libraries are needed).
+
+
+
+LISP: 
+
+It more or less similar to the way other modern programming languages work. However working with conditional statements and recursive calls is not as trivial. Compared to Prolog, all the recursive features need to be coded explicitly. In Prolog, the recursive features are implicit to the program. 
+
+
+-----------------------------------------------------------------------
+** Comparing Prolog and LISP, doing specific problems:
+-----------------------------------------------------------------------
+
+
+1) BFS and A-star algorithms to do 8/15-puzzles:
+
+Although it looked to be more difficult to implement these algorithms in Prolog, it was fairly easier for me and the code is smaller in Prolog. This is because, one does not need to takes care of recursive calls when coding, as Prolog takes care of all recursions by itself. In addition, in Prolog, the base cases are very well defined and easier to understand. The only difficult part in Prolog is that the desired output would be returned as one of the arguments of the defined predicates. Thus, one needs to be careful how to play with inputs and outputs and fully understand in what order Prolog does the recursion. Also tracing programs in Prolog is super complicated for these algorithms, compared to LISP, where the program is divided into more smaller functions. 
+
+
+-----------------------------------------------------------------------
+2) Colored-balls-in-a-row problems
+-----------------------------------------------------------------------
+
+
+Creating all permutations of colored balls is trivial in Prolog, as they are automatically produced by hitting ';' multiple times. Prolog does the recursion job by its nature. In LISP, I had a hard time to get the code to work to produce all possible permutations. In this case, one needs to think about the permutation algorithm in details. On the other hand, doing the arithmetic calculations and setting up the conditions is much easier in LISP. In lisp each condition can be defined in a simple function, that is easier to understand. In Prolog, it is easy too, but it seems to be more straightforward in LISP. Time-wise, I spend 15 minutes to code this in Prolog and about a 6 hours in LISP.
+
+
+-----------------------------------------------------------------------
+*** What do I prefer? 
+-----------------------------------------------------------------------
+
+
+I personally like Prolog a lot. It completely provides a different environment with a lot of other possibilities. I think, if a program needs a lot of recursions and it consists of a lot of logical thinking, Prolog is definitely the language of choice. 
+
+On the other hand, I did not really like LISP, as I think, whatever that can be done in LISP can be easily done in other modern programming languages (i.e the length of the required code is not that much different). I can even think to do all the previous assignments in C/C++, Python/JAVA with the same mind set, without changing the algorithm a lot. Also, taking care of the outputs of the functions in LISP can be really hard if one is not experienced.
+
+-----------------------------------------------------------------------
+**** Suggestions: 
+-----------------------------------------------------------------------
+
+
+I think for the pedagogical sake, I would rather to use modern languages as opposed to LISP, for the first half of the AI class. I really like the idea of using Python to learn AI algorithms (as it is implemented online by one of MIT professors ^1), since students do not need to spend their entire time debugging their LISP code. In addition, if students use modern languages for their assignments, probably more AI algorithms can be covered in the assignments. I don't like that we could not cover Genetic Algorithms and Neural Networks (Machine Learning) in our assignments. I think these two topics of AI are really important.
+
+For the second half of the class, I think learning how to write codes in Prolog is helpful. I would not change that part. I really like the natural language processing part, I was so happy how strong the DCG feature is in Prolog for language parsing.
+
+
+-----------------------------------------------------------------------
+MIT online lectures on AI
+1) http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-034-artificial-intelligence-fall-2010/lecture-videos/
+-----------------------------------------------------------------------
+
+

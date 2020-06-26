@@ -1,0 +1,34 @@
+; To load this program in lisp:
+; lisp > (load "farmer_goat.lisp")
+;
+; You need to have the file "search.lisp" in the same directory as this file. 
+;
+;  
+; To run:
+;   lisp> (start-over)
+;; ;; first node on open = ((1 1 1 1) NIL 0)
+;; ;; first node on open = (NIL (1 1 1 1) 1)
+;; ;; first node on open = ((0 1 0 1) (1 1 1 1) 1)
+;; ;; first node on open = ((1 1 0 1) (0 1 0 1) 2)
+;; ;; first node on open = ((0 0 0 1) (1 1 0 1) 3)
+;; ;; first node on open = ((1 0 1 1) (0 0 0 1) 4)
+;; ;; first node on open = ((0 0 1 0) (1 0 1 1) 5)
+;; ;; first node on open = ((1 0 1 0) (0 0 1 0) 6)
+;; ;; first node on open = ((0 0 0 0) (1 0 1 0) 7)
+;; ;; length of closed = 8
+;; ;; length of open = 1
+;; ;; solution path = ((1 1 1 1) (0 1 0 1) (1 1 0 1) (0 0 0 1) (1 0 1 1) (0 0 1 0) (1 0 1 0) (0 0 0 0))
+;; ;; NIL
+;; ;; 
+
+
+
+Solution chain: 
+(1 1 1 1) 
+(0 1 0 1) 
+(1 1 0 1) 
+(0 0 0 1) 
+(1 0 1 1) 
+(0 0 1 0) 
+(1 0 1 0) 
+(0 0 0 0)

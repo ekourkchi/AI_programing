@@ -1,0 +1,542 @@
+
+/*
+This code is written by Ehsan Kourkchi
+To do the Assignment 5 ---  ICS361
+Computer Science, University of Hawaii
+November 2015
+Email: ekourkchi@gmail.com
+
+Feature: Error handling feature has been added.
+
+To load the program: 
+      consult('ehsan20.HW05.pl').
+
+*/
+
+
+
+/* NOTE: This file is just a starting point! It is very much incomplete. You will have to modify the given clauses, and add new ones. 
+
+Try these: 
+
+?- top([is, it, true, that, mark, hamill, acts, in, star, wars, iv]).
+
+?- top([who, acts, in, star, wars, iv]).
+
+*/
+
+/* TOP/1
+
+ARG1 is a sentence represented as a list of atoms (e.g. [is, it, true, that, mark, hamill, acts, in, star, wars, iv]).
+
+TOP/1 will succeed or fail. Either way, it should write out a sensible answer.
+
+*/
+
+top(Sentence) :-
+  yesno(Query, Sentence, []), % This is a call to the DCG.
+  Query, % evaluates the query. Succeeds if true, fails if false.
+  format("Yes, that's true.").
+
+top(Sentence) :-
+ who(Who, Sentence, []), % This is a call to the DCG.
+ np(Who, X, []),
+ format("The person you're looking for is \""),
+ printList(X),
+ format("\".~n").
+ 
+top(Sentence) :-
+ what(What, Sentence, []), % This is a call to the DCG.
+ np(What, X, []),
+ format("It is \""),
+ printList(X),
+ format("\".~n"). 
+
+
+top(Sentence) :-
+ when(When, Sentence, []), % This is a call to the DCG.
+ np(When, X, []),
+ format("It was released in "),
+ printList(X),
+ format(".~n"). 
+ 
+printList([]) :- format('~n').
+printList([A]) :- format('~w', A), !.
+printList([A|T]) :- format('~w ', A), printList(T).
+
+top(Sentence) :-
+   right_end(Sentence),
+   right(Query, Sentence, []),
+   Query,
+   format("Yes, that's right. ~n").
+
+
+right_end([right]).
+right_end([_|T]) :- right_end(T).
+   
+   
+top(Sentence) :-
+   did(Query, Sentence, []),
+   Query,
+   format("Yes. ~n").
+
+   
+top(Sentence) :-
+   \+ right_end(Sentence),
+   sentences(Query, Sentence, []),
+   Query,
+   format("Sounds right :) ~n").   
+
+
+sanity(Sentence) :-
+   sentences(Query, Sentence, []),
+   Query.
+   
+
+%remove_who([who|T], T).
+%my_who(Sentence) :-
+    %remove_who(Sentence, T),
+    %myappend(H, T, NewSentence),
+    %sanity(NewSentence),
+    %printList(NewSentence).
+
+%myappend([], L, L).
+%myappend([H|T1], L2, [H|T]):-
+    %myappend(T1, L2, T).
+
+   
+/* DCG: Here's the grammar. Right now it's very simple. */
+
+%top([who, acts, in, star, wars, iv]).
+%who(X) --> [who], vp(X, _, [Query]), {Query}.
+who(Sub) --> [who], tobe_verb(Sub, Eval, who), {Eval}.
+who(Sub) --> [who], vp(Sub, Eval, s), {Eval}.
+who(Sub) --> [who], vp(Sub, Eval, ed), {Eval}.
+who(Sub) --> [who], vp(Sub, Eval, p), {Eval}, {wrong_grammar}.
+
+what(Sub) --> [what], tobe_verb(Sub, Eval, what), {Eval}.
+when(Year) --> [when, was], np[Sub], when_released(Eval, Sub, Year), {Eval}.
+when_released(release_year(Sub, Year), Sub, Year) --> [released].
+
+
+sentences(Eval) -->  single_sentence(Eval), rest_sentences(Eval).
+rest_sentences(Eval) --> [].
+rest_sentences((Eval_1,Eval_2)) --> [and], sentences(Eval_2).
+
+
+
+
+
+single_sentence(Eval) --> np(Sub), tobe_verb(Sub, Eval, _).
+
+tobe_verb(Sub, Eval, Q) --> [is], is_clause(Sub, Eval, Q).
+
+%%% Title, ask with "who" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+is_clause(Sub, director(Sub), who) --> [a, director].
+is_clause(Sub, director(Sub), who) --> [an, director], {wrong_grammar}.
+
+is_clause(Sub, director_of(Sub, Movie), who) --> [the, director, of], np(Movie).
+
+
+
+is_clause(Sub, actor(Sub), who) --> [an, actor].
+is_clause(Sub, actor(Sub), who) --> [a, actor], {wrong_grammar}.
+is_clause(Sub, acts_in(Sub, _, Movie), who) --> [an, actor], prep(Movie).
+is_clause(Sub, acts_in(Sub, _, Movie), who) --> [a, actor], prep(Movie), {wrong_grammar}.
+
+is_clause(Sub, acts_in(Sub, Character, Movie), who) --> [the, actor, for], np(Character), in_movie(Movie).
+is_clause(Character, acts_in(Sub, Character, Movie), who) --> [the, character, of], np(Sub), in_movie(Movie).
+
+%top([mark, hamill, is, the, actor, for, luke, skywalker, in, star, wars, iv]).
+
+
+%%% Title, ask with "what" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+is_clause(Sub, title_of(Sub, Movie), what) --> [the, title, of], np(Movie).
+%top([a, new, hope, is, the, title, of, star, wars, iv]).
+single_sentence(Eval) --> [the, title, of], np(Movie), [is], is_clause3(Movie, Eval).
+is_clause3(Movie, title_of(Sub, Movie)) --> np(Sub).
+%top([the, title, of, star, wars, iv, is, a, new, hope]).
+
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+np(Sem) --> proper_noun(Sem).
+%wrong_grammar :-  fail.
+wrong_grammar :- format("I don't get it. Check your gramamr! ~n"), fail.
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% It's either in 3rd person, or simple-past tense.
+single_sentence(Eval) --> statement(Eval, s).
+single_sentence(Eval) --> statement(Eval, ed).
+single_sentence(Eval) --> statement(Eval, p),  {wrong_grammar}.
+
+
+
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+single_sentence(Eval) --> np(Sub), was_released(Eval, Sub).
+was_released(Eval, Sub) --> [was, released], in_year(Eval, Sub, Year).
+
+in_year(release_year(Sub, Year), Sub, Year) --> [in, Year].
+
+
+
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+statement(Eval, Tense)  --> np(Sub), vp(Sub, Eval, Tense).
+
+   
+vp(Sub, Eval, Tense) --> verb2(Sub, Obj, Eval, Tense), np(Obj).
+vp(Sub, Eval, Tense) --> verb3(Sub, Prep, Eval, Tense), prep(Prep).
+vp(Sub, Eval, Tense) --> verb4(Sub, Obj, Prep, Eval, Tense), np(Obj), in_movie(Prep).
+   
+
+   
+verb2(X, Y, director_of(X, Y), p) --> [direct].
+verb2(X, Y, director_of(X, Y), s) --> [directs].
+verb2(X, Y, director_of(X, Y), ed) --> [directed].  
+   
+
+verb3(X, Y, acts_in(X,_,Y), p) --> [act].
+verb3(X, Y, acts_in(X,_,Y), s) --> [acts].
+verb3(X, Y, acts_in(X,_,Y), ed) --> [acted].
+
+verb3(X, Y, acts_in(X,_,Y), p) --> [play].
+verb3(X, Y, acts_in(X,_,Y), s) --> [plays].
+verb3(X, Y, acts_in(X,_,Y), ed) --> [played].
+
+in_movie(Movie) --> [].
+in_movie(Movie) --> [in], np(Movie).
+prep(Sem) --> [in], np(Sem).
+
+
+verb4(X, Y, Z, acts_in(X,Y,Z), p)  --> [play].
+verb4(X, Y, Z, acts_in(X,Y,Z), s)  --> [plays].
+verb4(X, Y, Z, acts_in(X,Y,Z), ed)  --> [played].
+
+
+
+
+
+%top([is, it, true, that, mark, hamill, acts, in, star, wars, iv]).
+yesno(Eval) --> [is, it, true, that], sentences(Eval).
+
+
+%top([mark, hamill, acts, in, star, wars, iv, right]).
+right(Eval) -->  sentences(Eval), [right].
+
+
+
+
+
+%top([did, mark, hamill, act, in, star, wars, iv]).
+did(Eval) --> [did], statement(Eval, p).
+did(Eval) --> [did], statement(Eval, s),   {wrong_grammar}.
+did(Eval) --> [did], statement(Eval, ed),  {wrong_grammar}.
+
+
+
+
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+/* DATABASE. Obviously, you're going to have to fill this out a lot. */
+
+title_of(a_new_hope, star_wars4).
+director_of(irvin_kershner, star_wars4).
+release_year(star_wars4, 1977).
+
+
+
+
+
+proper_noun(star_wars4) --> [star, wars, iv].
+proper_noun(a_new_hope) --> [a, new, hope].
+proper_noun(irvin_kershner) --> [irvin, kershner].
+director(irvin_kershner).
+
+acts_in(mark_hamill, luke_skywalker, star_wars4).
+proper_noun(mark_hamill) --> [mark, hamill].
+proper_noun(luke_skywalker) --> [luke, skywalker].
+actor(mark_hamill).
+
+acts_in(harrison_ford, han_solo, star_wars4).
+proper_noun(harrison_ford) --> [harrison, ford].
+proper_noun(han_solo) --> [han, solo].
+actor(harrison_ford).
+
+acts_in(carrie_fisher, princess_leia, star_wars4).
+proper_noun(carrie_fisher) --> [carrie, fisher].
+proper_noun(princess_leia) --> [princess, leia, organa].
+actor(carrie_fisher).
+
+acts_in(peter_cushing, grand_moff_tarkin, star_wars4).
+proper_noun(peter_cushing) --> [peter, cushing].
+proper_noun(grand_moff_tarkin) --> [grand, moff, tarkin].
+actor(peter_cushing).
+
+acts_in(alec_guinness, obi_wan, star_wars4).
+proper_noun(alec_guinness) --> [alec, guinness].
+proper_noun(obi_wan) --> [obi-wan, kenobi].
+actor(alec_guinness).
+
+acts_in(anthony_daniels, c_3PO, star_wars4).
+proper_noun(anthony_daniels) --> [anthony, daniels].
+proper_noun(c_3PO) --> [c_3PO].
+actor(anthony_daniels).
+
+acts_in(kenny_baker, r2_D2, star_wars4).
+proper_noun(kenny_baker) --> [kenny, baker].
+proper_noun(r2_D2) --> [r2_D2].
+actor(kenny_baker).
+
+acts_in(peter_mayhew, chewbacca, star_wars4).
+proper_noun(peter_mayhew) --> [peter, mayhew].
+proper_noun(chewbacca) --> [chewbacca].
+actor(peter_mayhew).
+
+acts_in(david_prowse, darth_vader, star_wars4).
+proper_noun(david_prowse) --> [david, prowse].
+proper_noun(darth_vader) --> [darth, vader].
+actor(david_prowse).
+
+acts_in(phil_brown, uncle_owen, star_wars4).
+proper_noun(phil_brown) --> [phil, brown].
+proper_noun(uncle_owen) --> [uncle, owen].
+actor(phil_brown).
+
+
+
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+title_of(empire_strikes_back, star_wars5).
+director_of(irvin_kershner, star_wars5).
+release_year(star_wars5, 1980).
+
+proper_noun(star_wars5) --> [star, wars, v].
+proper_noun(empire_strikes_back) --> [the, empire, strikes, back].
+
+acts_in(mark_hamill, luke_skywalker, star_wars5).
+acts_in(harrison_ford, han_solo, star_wars5).
+acts_in(carrie_fisher, princess_leia, star_wars5).
+
+acts_in(billy_williams, lando_calrissian, star_wars5).
+
+proper_noun(billy_williams) --> [billy, dee, williams].
+proper_noun(lando_calrissian) --> [lando, calrissian].
+actor(billy_williams).
+
+acts_in(anthony_daniels, c_3PO, star_wars5).
+acts_in(david_prowse, darth_vader, star_wars5).
+acts_in(peter_mayhew, chewbacca, star_wars5).
+actor(anthony_daniels).
+
+acts_in(kenny_baker, r2_D2, star_wars5).
+acts_in(alec_guinness, obi_wan, star_wars5).
+actor(kenny_baker).
+
+acts_in(frank_oz, yoda, star_wars5).
+proper_noun(frank_oz) --> [frank, oz].
+proper_noun(yoda) --> [yoda].
+actor(frank_oz).
+
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+title_of(return_jedi, star_wars6).
+director_of(richard_marquand, star_wars6).
+release_year(star_wars6, 1983).
+
+proper_noun(richard_marquand) --> [richard, marquand].
+director(richard_marquand).
+proper_noun(star_wars6) --> [star, wars, vi].
+proper_noun(return_jedi) --> [return, of, the, jedi].
+
+acts_in(mark_hamill, luke_skywalker, star_wars6).
+acts_in(harrison_ford, han_solo, star_wars6).
+acts_in(carrie_fisher, princess_leia, star_wars6).
+acts_in(billy_williams, lando_calrissian, star_wars6).
+acts_in(anthony_daniels, c_3PO, star_wars6).
+acts_in(peter_mayhew, chewbacca, star_wars6).
+
+
+acts_in(sebastian_shaw, anakin_skywalker, star_wars6).
+
+
+proper_noun(sebastian_shaw) --> [sebastian, shaw].
+proper_noun(anakin_skywalker) --> [anakin, skywalker].
+actor(sebastian_shaw).
+
+
+proper_noun(the_emperor) --> [the, emperor].
+proper_noun(ian_mcdiarmid) --> [ian, mcDiarmid].
+acts_in(ian_mcdiarmid, the_emperor, star_wars6).
+actor(ian_mcdiarmid).
+
+acts_in(frank_oz, yoda, star_wars6).
+
+acts_in(david_prowse, darth_vader, star_wars6).
+acts_in(alec_guinness, obi_wan, star_wars6).
+
+acts_in(kenny_baker, r2_D2, star_wars6).
+
+acts_in(kenny_baker, paploo, star_wars6).
+
+proper_noun(paploo) --> [paploo].
+
+
+
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+title_of(phantom_menace, star_wars1).
+director_of(george_lucas, star_wars1).
+release_year(star_wars1, 1999).
+
+
+proper_noun(george_lucas) --> [george, lucas].
+director(george_lucas).
+proper_noun(star_wars1) --> [star, wars, i].
+proper_noun(phantom_menace) --> [the, phantom, menace].
+
+
+proper_noun(liam_neeson) --> [liam, neeson].
+proper_noun(qui-gon) --> [qui-gon, jinn].
+actor(liam_neeson).
+
+acts_in(ewan_mcGregor, obi_wan, star_wars1).
+proper_noun(ewan_mcGregor) --> [ewan, mcGregor].
+
+
+acts_in(natalie_portman, queen_amidala, star_wars1).
+acts_in(natalie_portman, padme, star_wars1).
+proper_noun(natalie_portman) --> [natalie, portman].
+proper_noun(queen_amidala) --> [queen, amidala].
+proper_noun(padme) --> [padme].
+actor(natalie_portman).
+
+acts_in(jake_lloyd, anakin_skywalker, star_wars1).
+proper_noun(jake_lloyd) --> [jake, lloyd].
+actor(jake_lloyd).
+
+
+
+acts_in(ian_mcdiarmid, senator_palpatine, star_wars1).
+proper_noun(senator_palpatine) --> [senator, palpatine].
+
+
+
+acts_in(pernilla_august, shmi_skywalker, star_wars1).
+proper_noun(pernilla_august) --> [pernilla, august].
+proper_noun(shmi_skywalker) --> [shmi, skywalker].
+actor(pernilla_august).
+
+acts_in(oliver_ford_davies, sio_bibble, star_wars1).
+proper_noun(oliver_ford_davies) --> [oliver, ford, davies].
+proper_noun(sio_bibble) --> [sio, bibble].
+actor(oliver_ford_davies).
+
+
+acts_in(hugh_quarshie, captain_panaka, star_wars1).
+proper_noun(hugh_quarshie) --> [hugh, quarshie].
+proper_noun(captain_panaka) --> [captain, panaka].
+actor(hugh_quarshie).
+
+
+acts_in(ahmed_best, jar_jar, star_wars1).
+proper_noun(ahmed_best) --> [ahmed, best].
+proper_noun(jar_jar) --> [jar, jar, binks].
+actor(ahmed_best).
+
+acts_in(anthony_daniels, c_3PO, star_wars1).
+
+
+acts_in(kenny_baker, r2_D2, star_wars1).
+
+
+acts_in(frank_oz, yoda, star_wars1).
+
+
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+title_of(attack_clones, star_wars2).
+director_of(george_lucas, star_wars2).
+release_year(star_wars2, 2002).
+
+
+proper_noun(star_wars2) --> [star, wars, ii].
+proper_noun(attack_clones) --> [attack, of, the, clones].
+
+
+acts_in(ewan_mcGregor, obi_wan, star_wars2).
+acts_in(natalie_portman, padme, star_wars2).
+
+acts_in(hayden_christensen, anakin_skywalker, star_wars2).
+proper_noun(hayden_christensen) --> [hayden, christensen].
+actor(hayden_christensen).
+
+acts_in(christopher_lee, count_dooku, star_wars2).
+acts_in(christopher_lee, darth_tyranus, star_wars2).
+proper_noun(christopher_lee) --> [christopher, lee].
+proper_noun(count_dooku) --> [count, dooku].
+proper_noun(darth_tyranus) --> [darth, tyranus].
+actor(christopher_lee).
+
+ 
+
+acts_in(samuel_jackson, mace_windu, star_wars2).
+proper_noun(samuel_jackson) --> [samuel, jackson].
+proper_noun(mace_windu) --> [mace, windu].
+actor(samuel_jackson).
+
+ 
+ 
+acts_in(frank_oz, yoda, star_wars2). 
+
+acts_in(ian_mcdiarmid, supreme_chancellor_palpatine, star_wars2).
+proper_noun(supreme_chancellor_palpatine) --> [supreme, chancellor, palpatine].
+
+
+
+
+acts_in(pernilla_august, shmi_skywalker, star_wars2).
+
+
+acts_in(temuera_morrison, jango_fett, star_wars2).
+proper_noun(temuera_morrison) --> [temuera, morrison].
+proper_noun(jango_fett) --> [jango, fett].
+actor(temuera_morrison).
+
+
+acts_in(jimmy_smits, senator_bail, star_wars2).
+proper_noun(jimmy_smits) --> [jimmy, smits].
+proper_noun(senator_bail) --> [senator, bail, organa].
+actor(jimmy_smits).
+
+
+
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+title_of(revenge_sith, star_wars3).
+director_of(george_lucas, star_wars3).
+release_year(star_wars2, 2005).
+
+
+proper_noun(star_wars3) --> [star, wars, iii].
+proper_noun(revenge_sith) --> [revenge, of, the, sith].
+
+
+acts_in(ewan_mcGregor, obi_wan, star_wars3).
+acts_in(natalie_portman, padme, star_wars3).
+acts_in(hayden_christensen, anakin_skywalker, star_wars3).
+acts_in(ian_mcdiarmid, supreme_chancellor_palpatine, star_wars3).
+acts_in(samuel_jackson, mace_windu, star_wars3).
+acts_in(jimmy_smits, senator_bail, star_wars3).
+acts_in(frank_oz, yoda, star_wars3). 
+acts_in(anthony_daniels, c_3PO, star_wars3).
+acts_in(christopher_lee, count_dooku, star_wars3).
+
+acts_in(keisha_castle-hughes, queen_of_naboo, star_wars3).
+proper_noun(keisha_castle-hughes) --> [keisha, castle-hughes].
+proper_noun(queen_of_naboo) --> [queen, of, naboo].
+actor(keisha_castle-hughes).
+
+
+%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

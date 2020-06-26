@@ -1,0 +1,344 @@
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ; This code is written by Ehsan Kourkchi
+;; ; To do the Assignment 6 ---  ICS361
+;; ; Computer Science, University of Hawaii
+;; ; December 2015
+;; ; Email: ekourkchi@gmail.com
+;; ;
+;; ; To load this program in lisp:
+;; ; lisp > (load "ehsan20.HW06.C.lisp")
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;; (colors-number '(black green black orange black) 'black 0)
+(defun colors-number (balls color num)
+    
+    (if (equal balls nil)  
+      num  ; base-case
+      
+      (progn 
+          
+          (setf ball (car balls))
+          
+          (if (equal  ball color) ; if the node-state matches with the input "state"
+              
+              (setf num (+ 1 num))
+                
+          )  ; end-if   
+          
+          (colors-number (cdr balls) color num)
+                
+      ) ; end-progn
+
+
+    )
+)
+
+
+
+(defun n_elements (balls num)
+
+   (if (equal balls nil)  
+      num  ; base-case
+      
+      (n_elements (cdr balls) (+ 1 num))
+    
+   )  
+ 
+)
+
+
+
+(defun make-list-recur (color num balls)
+
+   (if (equal num 0)  
+      balls  ; base-case
+      
+      
+      (make-list-recur color (- num 1) (cons color balls))
+    
+   )  
+ 
+)
+
+
+;; (make-list 'brown 2)
+(defun make-list (color num)
+
+  (if (equal num 0)  
+      nil  ; base-case
+     (make-list-recur color num nil)
+  )
+)
+
+
+
+
+;; (make-list 'brown 2)
+(defun make-list (color num)
+
+  (if (equal num 0)  
+      nil  ; base-case
+     (make-list-recur color num nil)
+  )
+)
+
+
+
+(defun list-cons-recur (item list-item new-list)
+   
+   (if (null list-item)
+        new-list
+   
+   (progn
+   (setf A (car list-item))
+   (setf A-new (cons item A))
+   
+   (setf new-list (cons A-new new-list))
+   
+   (setf out (list-cons-recur item (cdr list-item) new-list))
+   
+   out
+   )
+   
+   )
+)
+
+
+
+;; (list-cons 'item '((apple) (orange)))
+(defun list-cons (item list-item)
+   
+   (cond
+      ((null list-item) nil)
+      (T (list-cons-recur item list-item nil))
+   )
+)
+
+
+
+(defun permute-color (b w r g)
+       
+
+   
+   (if (= 1  (+ (+ (+ b w) r) g))
+   
+   
+
+   
+   (cond 
+
+     ((< b 0) nil)
+     ((< w 0) nil)
+     ((< r 0) nil)
+     ((< g 0) nil)
+     ((= b 1) '((black)))
+     ((= w 1) '((white)))
+     ((= r 1) '((red)))
+     ((= g 1) '((green)))
+   
+   )
+   
+   
+   (cond
+   
+       ((< b 0) nil)
+       ((< w 0) nil)
+       ((< r 0) nil)
+       ((< g 0) nil)
+       ((= 0  (+ (+ (+ b w) r) g)) nil)
+       (T (append 
+            (list-cons 'black (permute-color (- b 1) w  r g)) 
+            (list-cons 'white (permute-color b (- w 1)  r g))
+            (list-cons 'red (permute-color b w (- r 1)  g))
+            (list-cons 'green (permute-color b w r (- g 1) ))
+       )) 
+   
+  
+   ) ; cond
+   
+   
+   
+   )
+   
+ 
+   
+   )
+
+   
+   
+   
+;; -------------------------------------------------------------------------   
+;;     You have eight colored balls: 1 black, 2 white, 2 red and 3 green.
+;; -------------------------------------------------------------------------
+;;     Cond 1: The balls in positions 2 and 3 are not green.
+;;     Cond 2: The balls in positions 4 and 8 are the same color.
+;;     Cond 3: The balls in positions 1 and 7 are of different colors.
+;;     Cond 4: There is a green ball to the left of every red ball.
+;;     Cond 5: A white ball is neither first nor last.
+;;     Cond 6: The balls in positions 6 and 7 are not red.
+;; ------------------------------------------------------------------------- 
+ 
+
+(defun what-is-recur (state index n)
+   
+   (cond 
+      ((= index n) (car state))
+      (T (what-is-recur (cdr state) index (+ n 1)))
+   )
+
+)  
+
+; Index starts from 1
+(defun what-is (state index)
+  
+  (what-is-recur state (- index 1) 0)
+  
+)
+
+
+; Cond 1: The balls in positions 2 and 3 are not green.
+(defun cond1 (state)
+  
+  (cond
+     ((equal (what-is state 2) 'green) nil)
+     ((equal (what-is state 3) 'green) nil)
+     (T T)
+  )
+  
+)
+
+
+; Cond 2: The balls in positions 4 and 8 are the same color.
+(defun cond2 (state)
+  
+  (setf ball4 (what-is state 4))
+  (setf ball8 (what-is state 8))
+  (cond
+     ((equal ball4 ball8) T)
+     (T nil)
+  )
+  
+)
+
+
+; Cond 3: The balls in positions 1 and 7 are of different colors.
+(defun cond3 (state)
+
+  (setf ball1 (what-is state 1))
+  (setf ball7 (what-is state 7))
+  (cond
+     ((equal ball1 ball7) nil)
+     (T T)
+  )
+  
+)
+  
+
+
+(defun left-of-red (state left-color)
+   
+   (setf head (car state)) 
+   (setf tail (cdr state)) 
+   
+   (cond 
+       ((null state) T)
+       ((equal head 'red) (and (equal left-color 'green) (left-of-red tail head)))
+       (T  (left-of-red tail head))
+   
+   )
+
+)
+
+; Cond 4: There is a green ball to the left of every red ball.  
+(defun cond4 (state)
+
+  (setf ball1 (what-is state 1))
+  
+  (cond
+     ((equal ball1 'red) nil)
+     (T (left-of-red state 'green))
+  )
+  
+)
+
+
+; Cond 5: A white ball is neither first nor last.
+(defun cond5 (state)
+  
+  (setf size (n_elements state 0))
+  
+  (cond
+     ((equal (what-is state 1) 'white) nil)
+     ((equal (what-is state size) 'white) nil)
+     (T T)
+  )
+  
+)
+      
+      
+; Cond 6: The balls in positions 6 and 7 are not red.
+(defun cond6 (state)
+
+
+  (cond
+     ((equal (what-is state 6) 'red) nil)
+     ((equal (what-is state 7) 'red) nil)
+     (T T)
+  )
+  
+
+)
+      
+
+      
+(defun conds (state)
+
+  (cond
+     ((not (cond1 state)) nil)
+     ((not (cond2 state)) nil)
+     ((not (cond3 state)) nil)
+     ((not (cond4 state)) nil)
+     ((not (cond5 state)) nil)
+     ((not (cond6 state)) nil)
+     (T T)
+  )
+
+)
+
+
+(defun check-conds (states valid-states)
+   
+   
+   (setf state (car states))
+   
+   (if (equal state nil)
+   
+   valid-states
+   
+   
+   
+   (if (conds state)
+       
+       (progn
+         (setf valid-states (cons state valid-states))
+         (check-conds (cdr states) valid-states)
+       )
+       
+       (check-conds (cdr states) valid-states)
+       
+      
+ 
+
+
+)))
+      
+
+      
+      
+(defun main (b w r g)
+
+   (check-conds (permute-color b w r g) nil)
+
+)

@@ -1,0 +1,64 @@
+Instructions
+ICS 361 Assignment 5: Natural Language Processing in Prolog (90 points, potential for 20 bonus points)
+Due: Monday, November 30. 
+ 
+Rules: Cite any sources you use, and write your own comments and error messages. Do not use any built-in predicates (aside from arithmetic operators, write/1 and format/2). 
+ 
+See Ass5.pl. This will give you a head start on this assignment. You’ll have to modify it a lot, though! 
+Your task is to write a DCG and a database (i.e. a set of predicates) to answer questions about Star Wars and Star Trek. Use IMDB.com as your source. Your database should include information about the first ten actors listed for any movie in either series, as well as its director. 
+ 
+The top level predicate (top/1) should take a wide range of questions (represented in list form) as its argument, and write out a good answer to the question. It should write out “I don’t get it” if the question is ungrammatical. If the question is grammatical but nonsensical (e.g. “Did Star Wars IV play Spock?”) it should simply give a negative response. If there are multiple answers to a question, forced backtracking (i.e. hitting “;”) should produce them.
+ 
+You should handle agreement with features.
+ 
+Grammatical queries:
+“Did Mark Hamill play Spock?”
+“Did William Shatner play Luke Skywalker?”
+“Mark Hamill plays Luke Skywalker, right?”
+“Did Mark Hamill play Spock in Star Trek III?”
+“Did William Shatner direct Star Wars I?”
+“Is it true that William Shatner is an actor?”
+“Is it true that William Shatner is an actor and Mark Hamill is a director?”
+“William Shatner is a director, Mark Hamill is an actor and Leonard Nimoy is an actor, right?” [should be able to handle any number of subqueries]
+“Who is the actor for Spock?”
+“What is the title of Star Wars II?”
+“Who is the director of Star Wars II?”
+“Who is the character of William Shatner?”
+ 
+Ungrammatical queries (examples): 
+* “Did William Shatner plays Spock?”
+* “Is it true that Spock is a actor?”
+* “Mark Hamill play Chewbacca, right?”
+* “William Shatner is an director, right?”
+ 
+Bonus (20 points)
+Impress me (and/or Branden) – be creative! Allow a wider range of queries than specified above, without allowing ungrammatical queries. To get full points, provide a list of grammatical queries allowed by your expanded DCG, as well as a list of ungrammatical queries it should reject.
+ 
+What to submit
+Turn in the following (all via Laulima):
+• All code, appropriately commented. 
+• All transcripts, showing that the code performs as required on a representative set of inputs. 
+ 
+ 
+Hi all,
+
+Several of you have asked which movies exactly should be covered for Assignment 5 - a reasonable question, given the large number of spin-offs, reboots etc. in both franchises. So, at a minimum, please cover: 
+
+Star Trek I: The Motion Picture (1979)
+Star Trek II: The Wrath of Khan (1982)
+Star Trek III: The Search for Spock (1984)
+Star Trek IV: The Voyage Home (1986)
+Star Trek V: The Final Frontier (1989)
+Star Trek VI: The Undiscovered Country (1991)
+ 
+Star Wars I: The Phantom Menace (1999)
+Star Wars II: Attack of the Clones (2002)
+Star Wars III: Revenge of the Sith (2005)
+Star Wars IV: Star Wars (1977)
+Star Wars V: The Empire Strikes Back (1980)
+Star Wars VI: Return of the Jedi (1983)
+Star Wars VII: The Force Awakens (2015)
+ 
+You can add more if you want. 
+ 
+For the bonus points, it might be interesting to use the release years. For example, your program could handle questions like "What film was released four years after/before Star Wars V?". Up to you, of course!

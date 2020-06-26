@@ -1,0 +1,87 @@
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ; This transcript is created by Ehsan Kourkchi
+;; ; to test the code "ehsan20.farmer_goat.v03.lisp"
+;; ; To do the Assignment 3 ---  ICS361
+;; ; Computer Science, University of Hawaii
+;; ; October 15 2015
+;; ; Email: ekourkchi@gmail.com
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ The default heuristic is used here ... The number of elements that are out of place
+ 
+ Lisp > (load "ehsan20.farmer_goat.v03.lisp")
+ Lisp > (start-over 'best-first)
+ 
+ first node on open = ((1 1 1 1) NIL 0 4)
+ first node on open = ((0 1 0 1) (1 1 1 1) 1 3)
+ first node on open = ((1 1 0 1) (0 1 0 1) 2 5)
+ first node on open = ((0 0 0 1) (1 1 0 1) 3 4)
+ first node on open = ((0 1 0 0) (1 1 0 1) 3 4)
+ first node on open = ((1 1 1 0) (0 1 0 0) 4 7)
+ first node on open = ((0 0 1 0) (1 1 1 0) 5 6)
+ first node on open = ((1 0 1 1) (0 0 0 1) 4 7)
+ first node on open = ((1 0 1 0) (0 0 1 0) 6 8)
+ first node on open = ((0 0 0 0) (1 0 1 0) 7 7)
+ 
+ length of closed = 10
+ length of open = 1
+ 
+ # of moves = 7
+ solution path = ((1 1 1 1) (0 1 0 1) (1 1 0 1) (0 1 0 0) (1 1 1 0) (0 0 1 0) (1 0 1 0) (0 0 0 0))
+ T
+
+ 
+ 
+--------------------------------------------------------------------------
+Important Note: 
+
+To compare the results, I have also attached the results of the other searches.
+As seen, "breadth-first" search can also find the minimal solution, 7-moves, but it has to 
+check 12 different states (all stores in the *closes* list) before reaching to the goal. 
+This number for the best-first search is 10 states, 
+which is smaller. This shows best-first search spend less time checking less states before getting to 
+the minimal solution. 
+
+In this case, depth-first search is lucky that it finds the minimal solution checking only
+8 states.
+--------------------------------------------------------------------------
+
+;; lisp> (start-over 'depth-first)
+;; first node on open = ((1 1 1 1) NIL 0 4)
+;; first node on open = ((0 1 0 1) (1 1 1 1) 1 3)
+;; first node on open = ((1 1 0 1) (0 1 0 1) 2 5)
+;; first node on open = ((0 1 0 0) (1 1 0 1) 3 4)
+;; first node on open = ((1 1 1 0) (0 1 0 0) 4 7)
+;; first node on open = ((0 0 1 0) (1 1 1 0) 5 6)
+;; first node on open = ((1 0 1 0) (0 0 1 0) 6 8)
+;; first node on open = ((0 0 0 0) (1 0 1 0) 7 7)
+;; 
+;; length of closed = 8
+;; length of open = 2
+;; 
+;; # of moves = 7
+;; solution path = ((1 1 1 1) (0 1 0 1) (1 1 0 1) (0 1 0 0) (1 1 1 0) (0 0 1 0) (1 0 1 0) (0 0 0 0))
+;; T
+;; ; 
+;; 
+;; Lisp > (start-over 'breadth-first)
+;; first node on open = ((1 1 1 1) NIL 0 4)
+;; first node on open = ((0 1 0 1) (1 1 1 1) 1 3)
+;; first node on open = ((1 1 0 1) (0 1 0 1) 2 5)
+;; first node on open = ((0 1 0 0) (1 1 0 1) 3 4)
+;; first node on open = ((0 0 0 1) (1 1 0 1) 3 4)
+;; first node on open = ((1 1 1 0) (0 1 0 0) 4 7)
+;; first node on open = ((1 0 1 1) (0 0 0 1) 4 7)
+;; first node on open = ((0 0 1 0) (1 1 1 0) 5 6)
+;; first node on open = ((0 0 1 0) (1 0 1 1) 5 6)
+;; first node on open = ((1 0 1 0) (0 0 1 0) 6 8)
+;; first node on open = ((1 0 1 0) (0 0 1 0) 6 8)
+;; first node on open = ((0 0 0 0) (1 0 1 0) 7 7)
+;; 
+;; length of closed = 12
+;; length of open = 1
+;; 
+;; # of moves = 7
+;; solution path = ((1 1 1 1) (0 1 0 1) (1 1 0 1) (0 0 0 1) (1 0 1 1) (0 0 1 0) (1 0 1 0) (0 0 0 0))
+;; T
+;; ;

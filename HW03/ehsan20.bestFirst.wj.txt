@@ -1,0 +1,122 @@
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ; This transcript is created by Ehsan Kourkchi
+;; ; to test the code "ehsan20.water_jugs.v03.lisp"
+;; ; To do the Assignment 3 ---  ICS361
+;; ; Computer Science, University of Hawaii
+;; ; October 15 2015
+;; ; Email: ekourkchi@gmail.com
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ The default heuristic is used here ... The number of elements that are out of place
+ 
+ lisp > (load "ehsan20.water_jugs.v03.lisp")
+ Lisp > (start-over 'best-first 11 7 1)
+ 
+ first node on open = ((0 0) NIL 0 2)
+ first node on open = ((11 0) (0 0) 1 2)
+ first node on open = ((0 7) (0 0) 1 2)
+ first node on open = ((11 7) (0 7) 2 3)
+ first node on open = ((7 0) (0 7) 2 3)
+ first node on open = ((11 7) (11 0) 2 3)
+ first node on open = ((4 7) (11 0) 2 3)
+ first node on open = ((4 0) (4 7) 3 4)
+ first node on open = ((7 7) (7 0) 3 4)
+ first node on open = ((11 3) (7 7) 4 5)
+ first node on open = ((0 4) (4 0) 4 5)
+ first node on open = ((11 4) (0 4) 5 6)
+ first node on open = ((0 3) (11 3) 5 6)
+ first node on open = ((3 0) (0 3) 6 7)
+ first node on open = ((8 7) (11 4) 6 7)
+ first node on open = ((8 0) (8 7) 7 8)
+ first node on open = ((1 7) (8 0) 8 8)
+ 
+ length of closed = 17
+ length of open = 1
+ 
+ # of moves = 8
+ solution path = ((0 0) (11 0) (4 7) (4 0) (0 4) (11 4) (8 7) (8 0) (1 7))
+ T
+
+ 
+ 
+--------------------------------------------------------------------------
+Important Note: 
+
+ This is heuristic function specifically used for this problem
+
+ sum: is the total water in both jugs
+ 
+ * if sum < *goal* then we are at least two moves away ... 
+   1) filling in one jug  
+   2) transferring water from one to another
+ 
+ ** if sum >=*goal* then we are at least one move away ...  
+   1) transferring water from one to another
+ 
+ *** if at least one of these jugs contains exactly the same amount water as needed, 
+ then we've achieved the goal and we are no moves away from the solution
+
+To compare the results, I have also attached the results of the other searches.
+As seen, "breadth-first" search can also find the minimal solution, 8-moves, but it has to 
+check 19 different states (all stores in the *closes* list) before reaching to the goal. 
+This number for the best-first search is 17 states, 
+which is smaller. This shows best-first search spend less time checking less states before getting to 
+the minimal solution. 
+
+In this case, depth-first search is lucky to find a solution after checking 14 states. Although it finds a solution faster, it is not minimal,
+and it does the job in 13 moves, as opposed to 8 moves.
+--------------------------------------------------------------------------
+
+
+;; ;; Example 1: lisp >  (start-over 'breadth-first 11 7 1)
+;; ;; first node on open = ((0 0) NIL 0 2)
+;; ;; first node on open = ((0 7) (0 0) 1 2)
+;; ;; first node on open = ((11 0) (0 0) 1 2)
+;; ;; first node on open = ((7 0) (0 7) 2 3)
+;; ;; first node on open = ((11 7) (0 7) 2 3)
+;; ;; first node on open = ((4 7) (11 0) 2 3)
+;; ;; first node on open = ((11 7) (11 0) 2 3)
+;; ;; first node on open = ((7 7) (7 0) 3 4)
+;; ;; first node on open = ((4 0) (4 7) 3 4)
+;; ;; first node on open = ((11 3) (7 7) 4 5)
+;; ;; first node on open = ((0 4) (4 0) 4 5)
+;; ;; first node on open = ((0 3) (11 3) 5 6)
+;; ;; first node on open = ((11 4) (0 4) 5 6)
+;; ;; first node on open = ((3 0) (0 3) 6 7)
+;; ;; first node on open = ((8 7) (11 4) 6 7)
+;; ;; first node on open = ((3 7) (3 0) 7 8)
+;; ;; first node on open = ((8 0) (8 7) 7 8)
+;; ;; first node on open = ((10 0) (3 7) 8 9)
+;; ;; first node on open = ((1 7) (8 0) 8 8)
+;; ;; 
+;; ;; length of closed = 19
+;; ;; length of open = 1
+;; ;; 
+;; ;; # of moves = 8
+;; ;; solution path = ((0 0) (11 0) (4 7) (4 0) (0 4) (11 4) (8 7) (8 0) (1 7))
+;; ;; T
+;
+;;
+;; Example 2: lisp > (start-over 'depth-first 11 7 1)
+;; ;; first node on open = ((0 0) NIL 0 2)
+;; ;; first node on open = ((0 7) (0 0) 1 2)
+;; ;; first node on open = ((7 0) (0 7) 2 3)
+;; ;; first node on open = ((7 7) (7 0) 3 4)
+;; ;; first node on open = ((11 3) (7 7) 4 5)
+;; ;; first node on open = ((11 7) (11 3) 5 6)
+;; ;; first node on open = ((11 0) (11 7) 6 7)
+;; ;; first node on open = ((4 7) (11 0) 7 8)
+;; ;; first node on open = ((4 0) (4 7) 8 9)
+;; ;; first node on open = ((0 4) (4 0) 9 10)
+;; ;; first node on open = ((11 4) (0 4) 10 11)
+;; ;; first node on open = ((8 7) (11 4) 11 12)
+;; ;; first node on open = ((8 0) (8 7) 12 13)
+;; ;; first node on open = ((1 7) (8 0) 13 13)
+;; ;; 
+;; ;; length of closed = 14
+;; ;; length of open = 6
+;; ;; 
+;; ;; # of moves = 13
+;; ;; solution path = ((0 0) (0 7) (7 0) (7 7) (11 3) (11 7) (11 0) (4 7) (4 0) (0 4) (11 4) (8 7) (8 0) (1 7))
+;; ;; T
+;

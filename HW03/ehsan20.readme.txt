@@ -1,0 +1,83 @@
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ; This transcript is created by Ehsan Kourkchi
+;; ; To do the Assignment 3 ---  ICS361
+;; ; Computer Science, University of Hawaii
+;; ; October 15 2015
+;; ; Email: ekourkchi@gmail.com
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+------------------------------
+What is new in this version?
+
+ - The search tree is created on fly as the search process goes one. This is more natural and very more efficient.
+ - Depth limit for the search is added. If the *goal* is not achieved traversing the search tree up to the specified 
+   depth limit, the search would be stopped.
+ - In the case on the best-first search, the *open* list would be sorted all the time, making the pop process more efficient
+------------------------------
+ 
+
+
+Here, I provide a brief description of the files:
+
+1) ehsan20.readme.txt
+ This file
+
+2) ehsan20.search.v03.lisp
+ All core functions to do 3 different searches are defined here.
+ It has the implementation of breadth-first, depth-first and best-first searches
+
+3) ehsan20.test.search.v03.lisp
+ This file is used to test "ehsan20.search.v03.lisp". In order to do that, we create a 
+ hypothetical tree and search it using different methods.
+
+4) ehsan20.farmer_goat.v03.lisp
+ The implementation of the farmer-wolf-goat-cabbage problem.
+ The function "farmer-heuristic" is used to find the number of items out of the place.
+
+5) ehsan20.water_jugs.v03.lisp
+ The implementation of the water-jugs problem.
+ The function "water-jugs-heuristic" is used as the standard heuristic.
+;
+; sum: is the total water in both jugs
+; if sum < *goal* then we are at least two moves away ... 1) filling in one jug  2) transferring water from one to another
+; if sum >=*goal* then we are at least one move away ...  1) transferring water from one to another
+; if at least one of these jugs contains exactly the same amount water as needed, then we've achieved the goal 
+; and we are no moves away from the solution
+ 
+ 
+6) ehsan20.8puzzle.v03.lisp
+ The implementation of the 8-puzzle problem.
+ 
+ The relevant heuristic functions:
+ a) 8uzzle-heuristic
+    default - number of tiles out of place
+ b) 8uzzle-heuristic-manhattan
+    Manhattan-distance heuristic
+ c) 8uzzle-my-heuristic
+    My own heuristic, i.e. the sum of the diagonal distance of tiles from their
+    current position to their goal position
+
+7) ehsan20.bestFirst.fwgc.txt
+ Transcript of best-first search for farmer-wolf-goat-cabbage problem.
+ It has also depth- and breadth-fist search results for comparison.
+ 
+8) ehsan20.bestFirst.wj.txt
+ Transcript of best-first search for water-jugs problem.
+ It has also depth- and breadth-fist search results for comparison.
+ 
+9) ehsan20.bestFirst.8puzle.default.txt    
+ Transcript of best-first search for 8-puzzle problem, using the default heuristic. 
+ We have run the program for 4 different puzzles, 2 easy puzzle, one medium and one hard. Also there
+ is transcript of the output, when the puzzle is impossible. We set the depth limit of the search tree to be 10
+ in this case, otherwise we have "Lisp Stack Overflow".
+ 
+10) ehsan20.bestFirst.8puzle.manhattan.txt        
+ The same as #9 but with Manhattan-distance heuristic
+
+11) ehsan20.bestFirst.8puzle.myHeuristic.txt  
+  The same as #9 and #10 but with my own heuristic (the diagonal distances)
+
+12) ehsan20.partC.evaluation.pdf
+  A pdf file that contains the answer to the questions in part C of this assignment,
+  where different heuristics for 8-puzzle problem are evaluated.
+  

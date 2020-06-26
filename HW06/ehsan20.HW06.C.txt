@@ -1,0 +1,26 @@
+## ###################################
+##  This transcript is created by Ehsan Kourkchi
+##  to test the code "ehsan20.HW06.C.lisp"
+##  To do the Assignment 6 ---  ICS361
+##  Computer Science, University of Hawaii
+##  December 2015
+##  Email: ekourkchi@gmail.com
+## ###################################
+
+
+
+> (main 1 2 2 3)
+((GREEN RED WHITE GREEN RED BLACK WHITE GREEN) (GREEN RED WHITE GREEN RED WHITE BLACK GREEN) (GREEN RED BLACK GREEN RED WHITE WHITE GREEN))
+
+
+
+Therefore the valid states would be: 
+  (GREEN RED WHITE GREEN RED BLACK WHITE GREEN) 
+  (GREEN RED WHITE GREEN RED WHITE BLACK GREEN) 
+  (GREEN RED BLACK GREEN RED WHITE WHITE GREEN)
+  
+This is result is exactly the same as what the Prolog program previously produced.
+
+
+## ###################################
+

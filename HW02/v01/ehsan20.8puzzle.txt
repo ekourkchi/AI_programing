@@ -1,0 +1,61 @@
+; This code is commented by Ehsan Kourkchi
+; to practice some lisp
+; October 9 2015
+;
+; Based on the puzzle introduced here:
+; http://www.tilepuzzles.com/default.asp?p=12
+;
+; To load this program in lisp:
+; lisp >  (load "8puzzle.lisp")
+; 
+;
+; You need to have the file "search.lisp" in the same directory as this file. 
+;
+;  
+; To run:
+;   lisp > (start-over start goal)
+; Example:
+; lsip > (start-over '((2 8 3)(1 6 4)(7 0 5)) '((1 2 3)(8 0 4)(7 6 5)))
+;; ;; first node on open = (((2 8 3) (1 6 4) (7 0 5)) NIL 0)
+;; ;; first node on open = (NIL ((2 8 3) (1 6 4) (7 0 5)) 1)
+;; ;; first node on open = (((2 8 3) (1 0 4) (7 6 5)) ((2 8 3) (1 6 4) (7 0 5)) 1)
+;; ;; first node on open = (((2 0 3) (1 8 4) (7 6 5)) ((2 8 3) (1 0 4) (7 6 5)) 2)
+;; ;; first node on open = (((0 2 3) (1 8 4) (7 6 5)) ((2 0 3) (1 8 4) (7 6 5)) 3)
+;; ;; first node on open = (((1 2 3) (0 8 4) (7 6 5)) ((0 2 3) (1 8 4) (7 6 5)) 4)
+;; ;; first node on open = (((1 2 3) (7 8 4) (0 6 5)) ((1 2 3) (0 8 4) (7 6 5)) 5)
+;; ;; first node on open = (((1 2 3) (8 0 4) (7 6 5)) ((1 2 3) (0 8 4) (7 6 5)) 5)
+;; ;; length of closed = 7
+;; ;; length of open = 5
+;; ;; solution path = 
+;; ;; (((2 8 3) (1 6 4) (7 0 5)) ((2 8 3) (1 0 4) (7 6 5)) ((2 0 3) (1 8 4) (7 6 5)) ((0 2 3) (1 8 4) (7 6 5)) ((1 2 3) (0 8 4) (7 6 5))
+;; ;;  ((1 2 3) (8 0 4) (7 6 5)))
+;; ;; NIL
+
+
+- solution chain - 
+
+*start*
+2 8 3
+1 6 4
+7   5
+
+2 8 3
+1   4
+7 6 5
+
+2 0 3
+1 8 4
+7 6 5
+
+  2 3
+1 8 4
+7 6 5
+
+1 2 3
+  8 4
+7 6 5
+
+*goal*
+1 2 3
+8   4
+7 6 5

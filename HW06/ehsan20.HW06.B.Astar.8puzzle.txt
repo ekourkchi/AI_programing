@@ -1,0 +1,321 @@
+## ###################################
+##  This transcript is created by Ehsan Kourkchi
+##  to test the code "ehsan20.HW06.B.Astar.8puzzle.pl"
+##  To do the Assignment 6 ---  ICS361
+##  Computer Science, University of Hawaii
+##  December 2015
+##  Email: ekourkchi@gmail.com
+## ###################################
+
+
+
+--------------------------------------------------------------------------
+---- EASY ----  EASY ----  EASY ----  EASY ----  EASY ----  EASY ---- 
+--------------------------------------------------------------------------
+
+  2 8 3            1 2 3
+  1 6 4     -->    8   4     (5 moves)(closed 5)(open 6)
+  7   5            7 6 5
+ 
+ 
+?- astar([2, 8, 3, 1, 6, 4, 7, 0, 5], [1, 2, 3, 8, 0, 4, 7, 6, 5], Solution).
+
+ first node on open = (2 8 3 1 6 4 7 0 5 ) NIL level: 0 F: 6 
+ first node on open = (2 8 3 1 0 4 7 6 5 )  (2 8 3 1 6 4 7 0 5 ) level: 1 F: 5 
+ first node on open = (2 0 3 1 8 4 7 6 5 )  (2 8 3 1 0 4 7 6 5 ) level: 2 F: 6 
+ first node on open = (0 2 3 1 8 4 7 6 5 )  (2 0 3 1 8 4 7 6 5 ) level: 3 F: 7 
+ first node on open = (1 2 3 0 8 4 7 6 5 )  (0 2 3 1 8 4 7 6 5 ) level: 4 F: 6 
+ first node on open = (1 2 3 8 0 4 7 6 5 )  (1 2 3 0 8 4 7 6 5 ) level: 5 F: 5 
+
+ Hooraay ! :) 
+ length of closed = : 5 
+ length of open = 6 
+
+ # of Moves: 5 
+
+ 2 8 3 
+ 1 6 4 
+ 7 0 5 
+
+ 2 8 3 
+ 1 0 4 
+ 7 6 5 
+
+ 2 0 3 
+ 1 8 4 
+ 7 6 5 
+
+ 0 2 3 
+ 1 8 4 
+ 7 6 5 
+
+ 1 2 3 
+ 0 8 4 
+ 7 6 5 
+
+ 1 2 3 
+ 8 0 4 
+ 7 6 5 
+ 
+Solution = [[2, 8, 3, 1, 6, 4, 7, 0|...], [2, 8, 3, 1, 0, 4, 7|...], [2, 0, 3, 1, 8, 4|...], [0, 2, 3, 1, 8|...], [1, 2, 3, 0|...], [1, 2, 3|...]].
+
+
+--------------------------------------------------------------------------
+---- EASY ----  EASY ----  EASY ----  EASY ----  EASY ----  EASY ---- 
+--------------------------------------------------------------------------
+
+  1 3 4            1 2 3
+  8   5     -->    8   4     (6 moves)(closed 7)(open 8)
+  7 2 6            7 6 5
+  
+  
+?- astar([1, 3, 4, 8, 0, 5, 7, 2, 6], [1, 2, 3, 8, 0, 4, 7, 6, 5], Solution).
+
+ first node on open = (1 3 4 8 0 5 7 2 6 ) NIL level: 0 F: 6 
+ first node on open = (1 3 4 8 2 5 7 0 6 )  (1 3 4 8 0 5 7 2 6 ) level: 1 F: 7 
+ first node on open = (1 3 4 8 2 5 7 6 0 )  (1 3 4 8 2 5 7 0 6 ) level: 2 F: 8 
+ first node on open = (1 3 4 8 2 0 7 6 5 )  (1 3 4 8 2 5 7 6 0 ) level: 3 F: 7 
+ first node on open = (1 3 4 8 0 2 7 6 5 )  (1 3 4 8 2 0 7 6 5 ) level: 4 F: 8 
+ first node on open = (1 3 0 8 2 4 7 6 5 )  (1 3 4 8 2 0 7 6 5 ) level: 4 F: 8 
+ first node on open = (1 0 3 8 2 4 7 6 5 )  (1 3 0 8 2 4 7 6 5 ) level: 5 F: 7 
+ first node on open = (1 2 3 8 0 4 7 6 5 )  (1 0 3 8 2 4 7 6 5 ) level: 6 F: 6 
+
+ Hooraay ! :) 
+ length of closed = : 7 
+ length of open = 8 
+
+ # of Moves: 6 
+
+ 1 3 4 
+ 8 0 5 
+ 7 2 6 
+
+ 1 3 4 
+ 8 2 5 
+ 7 0 6 
+
+ 1 3 4 
+ 8 2 5 
+ 7 6 0 
+
+ 1 3 4 
+ 8 2 0 
+ 7 6 5 
+
+ 1 3 0 
+ 8 2 4 
+ 7 6 5 
+
+ 1 0 3 
+ 8 2 4 
+ 7 6 5 
+
+ 1 2 3 
+ 8 0 4 
+ 7 6 5 
+ 
+Solution = [[1, 3, 4, 8, 0, 5, 7, 2|...], [1, 3, 4, 8, 2, 5, 7|...], [1, 3, 4, 8, 2, 5|...], [1, 3, 4, 8, 2|...], [1, 3, 0, 8|...], [1, 0, 3|...], [1, 2|...]].
+
+--------------------------------------------------------------------------
+---- MEDIUM ---- MEDIUM ---- MEDIUM ----  ---- MEDIUM ----  ---- MEDIUM --
+--------------------------------------------------------------------------
+
+  1 2 3            2 8 1
+  8   4     -->      4 3     (9 moves)(closed 23)(open 19)
+  7 6 5            7 6 5 
+
+?- astar([1, 2, 3, 8, 0, 4, 7, 6, 5], [2, 8, 1, 0, 4, 3, 7, 6, 5], Solution).
+
+ first node on open = (1 2 3 8 0 4 7 6 5 ) NIL level: 0 F: 8 
+ first node on open = (1 2 3 0 8 4 7 6 5 )  (1 2 3 8 0 4 7 6 5 ) level: 1 F: 7 
+ first node on open = (1 2 3 8 4 0 7 6 5 )  (1 2 3 8 0 4 7 6 5 ) level: 1 F: 9 
+ first node on open = (1 2 0 8 4 3 7 6 5 )  (1 2 3 8 4 0 7 6 5 ) level: 2 F: 10 
+ first node on open = (0 2 3 1 8 4 7 6 5 )  (1 2 3 0 8 4 7 6 5 ) level: 2 F: 10 
+ first node on open = (1 2 3 7 8 4 0 6 5 )  (1 2 3 0 8 4 7 6 5 ) level: 2 F: 10 
+ first node on open = (2 0 3 1 8 4 7 6 5 )  (0 2 3 1 8 4 7 6 5 ) level: 3 F: 11 
+ first node on open = (2 8 3 1 0 4 7 6 5 )  (2 0 3 1 8 4 7 6 5 ) level: 4 F: 10 
+ first node on open = (2 8 3 0 1 4 7 6 5 )  (2 8 3 1 0 4 7 6 5 ) level: 5 F: 9 
+ first node on open = (2 8 3 1 4 0 7 6 5 )  (2 8 3 1 0 4 7 6 5 ) level: 5 F: 11 
+ first node on open = (1 0 2 8 4 3 7 6 5 )  (1 2 0 8 4 3 7 6 5 ) level: 3 F: 11 
+ first node on open = (0 1 2 8 4 3 7 6 5 )  (1 0 2 8 4 3 7 6 5 ) level: 4 F: 10 
+ first node on open = (8 1 2 0 4 3 7 6 5 )  (0 1 2 8 4 3 7 6 5 ) level: 5 F: 9 
+ first node on open = (1 0 3 8 2 4 7 6 5 )  (1 2 3 8 0 4 7 6 5 ) level: 1 F: 11 
+ first node on open = (0 1 3 8 2 4 7 6 5 )  (1 0 3 8 2 4 7 6 5 ) level: 2 F: 10 
+ first node on open = (8 1 3 0 2 4 7 6 5 )  (0 1 3 8 2 4 7 6 5 ) level: 3 F: 9 
+ first node on open = (8 1 3 2 0 4 7 6 5 )  (8 1 3 0 2 4 7 6 5 ) level: 4 F: 10 
+ first node on open = (8 1 3 2 4 0 7 6 5 )  (8 1 3 2 0 4 7 6 5 ) level: 5 F: 11 
+ first node on open = (1 2 3 8 6 4 7 0 5 )  (1 2 3 8 0 4 7 6 5 ) level: 1 F: 11 
+ first node on open = (1 2 3 8 6 4 0 7 5 )  (1 2 3 8 6 4 7 0 5 ) level: 2 F: 12 
+ first node on open = (8 1 0 2 4 3 7 6 5 )  (8 1 3 2 4 0 7 6 5 ) level: 6 F: 12 
+ first node on open = (8 0 1 2 4 3 7 6 5 )  (8 1 0 2 4 3 7 6 5 ) level: 7 F: 11 
+ first node on open = (0 8 1 2 4 3 7 6 5 )  (8 0 1 2 4 3 7 6 5 ) level: 8 F: 10 
+ first node on open = (2 8 1 0 4 3 7 6 5 )  (0 8 1 2 4 3 7 6 5 ) level: 9 F: 9 
+
+ Hooraay ! :) 
+ length of closed = : 23 
+ length of open = 19 
+
+ # of Moves: 9 
+
+ 1 2 3 
+ 8 0 4 
+ 7 6 5 
+
+ 1 0 3 
+ 8 2 4 
+ 7 6 5 
+
+ 0 1 3 
+ 8 2 4 
+ 7 6 5 
+
+ 8 1 3 
+ 0 2 4 
+ 7 6 5 
+
+ 8 1 3 
+ 2 0 4 
+ 7 6 5 
+
+ 8 1 3 
+ 2 4 0 
+ 7 6 5 
+
+ 8 1 0 
+ 2 4 3 
+ 7 6 5 
+
+ 8 0 1 
+ 2 4 3 
+ 7 6 5 
+
+ 0 8 1 
+ 2 4 3 
+ 7 6 5 
+
+ 2 8 1 
+ 0 4 3 
+ 7 6 5 
+ 
+Solution = [[1, 2, 3, 8, 0, 4, 7, 6|...], [1, 0, 3, 8, 2, 4, 7|...], [0, 1, 3, 8, 2, 4|...], [8, 1, 3, 0, 2|...], [8, 1, 3, 2|...], [8, 1, 3|...], [8, 1|...], [8|...], [...|...]|...].
+
+
+
+--------------------------------------------------------------------------
+---- HARD ----  HARD ---- HARD ---- HARD ---- HARD ---- HARD ---- HARD ---
+--------------------------------------------------------------------------
+
+  1 2 3            1 2 3
+  4 5 8     -->    4 5 6     (12 moves)(closed 43)(open 35)
+  6 7              7 8 
+
+
+?- astar([1, 2, 3, 4, 5, 8, 6, 7, 0], [1, 2, 3, 4, 5, 6, 7, 8, 0], Solution).
+ first node on open = (1 2 3 4 5 8 6 7 0 ) NIL level: 0 F: 6 
+ first node on open = (1 2 3 4 5 0 6 7 8 )  (1 2 3 4 5 8 6 7 0 ) level: 1 F: 7 
+ first node on open = (1 2 3 4 5 8 6 0 7 )  (1 2 3 4 5 8 6 7 0 ) level: 1 F: 9 
+ first node on open = (1 2 3 4 5 8 0 6 7 )  (1 2 3 4 5 8 6 0 7 ) level: 2 F: 10 
+ first node on open = (1 2 3 4 0 5 6 7 8 )  (1 2 3 4 5 0 6 7 8 ) level: 2 F: 10 
+ first node on open = (1 2 0 4 5 3 6 7 8 )  (1 2 3 4 5 0 6 7 8 ) level: 2 F: 10 
+ first node on open = (1 2 3 4 7 5 6 0 8 )  (1 2 3 4 0 5 6 7 8 ) level: 3 F: 11 
+ first node on open = (1 2 3 4 7 5 6 8 0 )  (1 2 3 4 7 5 6 0 8 ) level: 4 F: 10 
+ first node on open = (1 2 3 4 7 5 0 6 8 )  (1 2 3 4 7 5 6 0 8 ) level: 4 F: 12 
+ first node on open = (1 2 3 4 0 8 6 5 7 )  (1 2 3 4 5 8 6 0 7 ) level: 2 F: 12 
+ first node on open = (1 2 3 4 8 0 6 5 7 )  (1 2 3 4 0 8 6 5 7 ) level: 3 F: 11 
+ first node on open = (1 2 3 4 8 7 6 5 0 )  (1 2 3 4 8 0 6 5 7 ) level: 4 F: 12 
+ first node on open = (1 2 3 4 7 0 6 8 5 )  (1 2 3 4 7 5 6 8 0 ) level: 5 F: 13 
+ first node on open = (1 0 2 4 5 3 6 7 8 )  (1 2 0 4 5 3 6 7 8 ) level: 3 F: 13 
+ first node on open = (1 2 3 0 4 5 6 7 8 )  (1 2 3 4 0 5 6 7 8 ) level: 3 F: 13 
+ first node on open = (1 2 3 6 4 5 0 7 8 )  (1 2 3 0 4 5 6 7 8 ) level: 4 F: 12 
+ first node on open = (1 2 3 6 4 5 7 0 8 )  (1 2 3 6 4 5 0 7 8 ) level: 5 F: 11 
+ first node on open = (1 2 3 6 4 5 7 8 0 )  (1 2 3 6 4 5 7 0 8 ) level: 6 F: 10 
+ first node on open = (1 2 3 6 4 0 7 8 5 )  (1 2 3 6 4 5 7 8 0 ) level: 7 F: 13 
+ first node on open = (1 0 3 4 2 5 6 7 8 )  (1 2 3 4 0 5 6 7 8 ) level: 3 F: 13 
+ first node on open = (1 2 3 0 5 8 4 6 7 )  (1 2 3 4 5 8 0 6 7 ) level: 3 F: 13 
+ first node on open = (1 2 3 5 0 8 4 6 7 )  (1 2 3 0 5 8 4 6 7 ) level: 4 F: 14 
+ first node on open = (1 2 3 5 8 0 4 6 7 )  (1 2 3 5 0 8 4 6 7 ) level: 5 F: 13 
+ first node on open = (1 2 3 5 6 8 4 0 7 )  (1 2 3 5 0 8 4 6 7 ) level: 5 F: 13 
+ first node on open = (1 2 3 5 6 8 4 7 0 )  (1 2 3 5 6 8 4 0 7 ) level: 6 F: 12 
+ first node on open = (1 2 3 5 6 0 4 7 8 )  (1 2 3 5 6 8 4 7 0 ) level: 7 F: 13 
+ first node on open = (1 2 3 5 0 6 4 7 8 )  (1 2 3 5 6 0 4 7 8 ) level: 8 F: 14 
+ first node on open = (1 2 3 5 8 7 4 6 0 )  (1 2 3 5 8 0 4 6 7 ) level: 6 F: 14 
+ first node on open = (1 3 0 4 2 5 6 7 8 )  (1 0 3 4 2 5 6 7 8 ) level: 4 F: 14 
+ first node on open = (1 2 3 6 0 5 7 4 8 )  (1 2 3 6 4 5 7 0 8 ) level: 6 F: 14 
+ first node on open = (1 2 3 6 5 0 7 4 8 )  (1 2 3 6 0 5 7 4 8 ) level: 7 F: 13 
+ first node on open = (1 2 3 6 5 8 7 4 0 )  (1 2 3 6 5 0 7 4 8 ) level: 8 F: 14 
+ first node on open = (1 5 2 4 0 3 6 7 8 )  (1 0 2 4 5 3 6 7 8 ) level: 4 F: 14 
+ first node on open = (1 2 0 4 8 3 6 5 7 )  (1 2 3 4 8 0 6 5 7 ) level: 4 F: 14 
+ first node on open = (1 5 2 4 3 0 6 7 8 )  (1 5 2 4 0 3 6 7 8 ) level: 5 F: 15 
+ first node on open = (1 5 2 4 7 3 6 0 8 )  (1 5 2 4 0 3 6 7 8 ) level: 5 F: 15 
+ first node on open = (1 5 2 4 7 3 6 8 0 )  (1 5 2 4 7 3 6 0 8 ) level: 6 F: 14 
+ first node on open = (1 2 3 0 6 5 7 4 8 )  (1 2 3 6 0 5 7 4 8 ) level: 7 F: 15 
+ first node on open = (1 3 5 4 2 0 6 7 8 )  (1 3 0 4 2 5 6 7 8 ) level: 5 F: 15 
+ first node on open = (1 2 3 5 8 7 4 0 6 )  (1 2 3 5 8 7 4 6 0 ) level: 7 F: 15 
+ first node on open = (1 2 3 0 5 6 4 7 8 )  (1 2 3 5 0 6 4 7 8 ) level: 9 F: 15 
+ first node on open = (1 2 3 4 5 6 0 7 8 )  (1 2 3 0 5 6 4 7 8 ) level: 10 F: 14 
+ first node on open = (1 2 3 4 5 6 7 0 8 )  (1 2 3 4 5 6 0 7 8 ) level: 11 F: 13 
+ first node on open = (1 2 3 4 5 6 7 8 0 )  (1 2 3 4 5 6 7 0 8 ) level: 12 F: 12 
+
+ Hooraay ! :) 
+ length of closed = : 43 
+ length of open = 35 
+
+ # of Moves: 12 
+
+ 1 2 3 
+ 4 5 8 
+ 6 7 0 
+
+ 1 2 3 
+ 4 5 8 
+ 6 0 7 
+
+ 1 2 3 
+ 4 5 8 
+ 0 6 7 
+
+ 1 2 3 
+ 0 5 8 
+ 4 6 7 
+
+ 1 2 3 
+ 5 0 8 
+ 4 6 7 
+
+ 1 2 3 
+ 5 6 8 
+ 4 0 7 
+
+ 1 2 3 
+ 5 6 8 
+ 4 7 0 
+
+ 1 2 3 
+ 5 6 0 
+ 4 7 8 
+
+ 1 2 3 
+ 5 0 6 
+ 4 7 8 
+
+ 1 2 3 
+ 0 5 6 
+ 4 7 8 
+
+ 1 2 3 
+ 4 5 6 
+ 0 7 8 
+
+ 1 2 3 
+ 4 5 6 
+ 7 0 8 
+
+ 1 2 3 
+ 4 5 6 
+ 7 8 0 
+ 
+Solution = [[1, 2, 3, 4, 5, 8, 6, 7|...], [1, 2, 3, 4, 5, 8, 6|...], [1, 2, 3, 4, 5, 8|...], [1, 2, 3, 0, 5|...], [1, 2, 3, 5|...], [1, 2, 3|...], [1, 2|...], [1|...], [...|...]|...].
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------

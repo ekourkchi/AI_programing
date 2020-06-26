@@ -1,0 +1,34 @@
+﻿; This code is commented by Ehsan Kourkchi
+; to practice some lisp
+; September 20 2015
+
+
+
+
+(defparameter n 1)
+
+
+(defun factorial (n)
+    (cond
+       ((eq 0 n) 1)                   ;; base case
+       (T (* n (factorial (- n 1))))  ;; else condition (recursive call)
+    )
+
+)
+     
+     
+     
+     
+;; (defun isnull (x)
+;; (cond 
+;; (x NIL) 
+;; (T T )))
+;; 
+;; (isnull (list 2 3 4))
+;; NIL
+;; 
+;; (isnull ())
+;; T
+;; 
+;; (setf my-first-variable 57)
+

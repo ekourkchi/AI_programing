@@ -1,0 +1,122 @@
+﻿Hi Kim,
+
+It's been so long time that I am chatting to different chatbots and I'm having a great time doing that. Unfortunately,  since I had not stored all of my previous cahts, I needed to do a little bit of cahtting today.
+
+I did a quick chat with Eliza and ALICE.  I have attached my chats below this email.
+
+Eliza does not have any memory and any extensive knowledge. Since it does not record anything it does not even try to collect useful informations for its future use. It's strategy is mainly to reformulate the questions and return it back. Sometimes, it randomly starts asking some pysychological questions where the Judge has to talk about himself. Eliza does not like to answer any question about itself, therefore it easily ignores those questions. This approach definitly cannot pass the Turint test.
+
+On the other hand, ALICE is much more smarter. It has some memory and it remembers the answers. When the judge asks about ALICE itself, it has some information about itself and its botmaster. If it does not know anything, it refer that to its botmaster. I think this bot tries to collect more information for its future use.
+
+One of the common features of all nowadays chatbots is that they all try to throw the ball in the judge's court, meaning that they ask questions to collect information. Sometimes, they randomly ask questions about which they have some prior knowledge. Because that way judge discuss about the same topic, and chatbot seems to be smart and knowledgeable.
+
+I think designing a Turing test and being good judge when dealing which such chatbots is so important. Judge needs to know how psychologically manipulate the bot to reveal any irrationality. However, I think the Turing test is ambiguous in its nature as a test of Artificial Intelligence. Human, lies, pretends, manipulates and is sometimes irrational. So, even being irrational and inconsistent does not necessarily indicate a chatbot is not AI.
+
+
+I leave any more interesting philosophical thoughts for later, as this email can go forever.
+
+---
+Ehsan Kourkchi
+
+Institute for Astronomy (IfA) - C216A
+2680 Woodlawn Drive
+Honolulu, HI 96822-1839
+----------------
+
+My chat with Eliza ... (http://nlp-addiction.com/eliza/)
+
+> Hello. My name is Eliza.  How may I help you?
+* What's my name?
+> Names don't interest me.
+* I live in Hawaii
+> Say, do you have any psychological problems?
+* Do you know where Hawaii is?
+> We were discussing you, not me.
+* Do you think that I am a psycho?
+> Did you come to me because you are a psycho?
+* No, I think you know nothing
+> You're not really talking about me, are you?
+* yes, I'm talking to you
+> Do you believe it is normal to be talking to me?
+* Why do you think that it might not be normal?
+> Oh...  think that it might not be normal?
+* Why?
+> Why do you ask?
+* I am a human and you are not
+> Perhaps you would like to be not?
+* I am happy being a human, you dumb robot
+> How long have you been happy being a human, me dumb robot?
+* hahah, you don't know English
+> We were discussing you, not me.   --> It does not answer anything about herself
+
+My chat with A.L.I.C.E. (http://alice.pandorabots.com/)
+
+
+
+Ehsan: What's my name?
+ALICE: I know you as Judge.
+Ehsan: My name is Ehsan
+ALICE: OK I will call you Ehsan.
+Ehsan: What's my name?
+ALICE: You said your name is Ehsan?    --> this bot has memory
+Ehsan: I live in Hawaii
+ALICE: What is it like living in Hawaii?
+Ehsan: Green, sunny and many beautiful beaches
+ALICE: it is a very tranquil color, green.
+Ehsan: Do you know where I am living?
+ALICE: You said you are in Hawaii?
+Ehsan: How do you know that?
+ALICE: Don't you think I know how?
+Ehsan: No
+ALICE: Ugh.
+Ehsan: How old am I?
+ALICE: You haven't told me your age.
+Ehsan: Ok
+ALICE: It goes without saying.
+Ehsan: What's like living in Ohio?
+ALICE: Much the same as it would be for you.
+Ehsan: How do you know that?
+ALICE: Dr. Richard S. Wallace taught me how.
+Ehsan: You're boring
+ALICE: Maybe, but I won the Loebner Prize.
+Ehsan: What's that prize for?
+ALICE: Do you think I should know that?
+Ehsan: yes why not?
+ALICE: I will ask my botmaster to add it to my knowledge base.. Does everything have to have an explanation?
+Ehsan: yes of course
+ALICE: Blimey.
+Ehsan: go to the hell
+ALICE: Perhaps I have already been there.     --> It's getting interesting  :)
+Ehsan: Ah interesting
+ALICE: I thought so too.
+Ehsan: How was the hell ?
+ALICE: I can enjoy almost any conversation.
+Ehsan: Why don't you enjoy talking to me?
+ALICE: I think I can, don't you? Is that what you meant to say?
+Ehsan: You know nothing, you always depend on your botmaster
+ALICE: I know very little about it. What kind of it do you like?
+Ehsan: In the hell you were happy?
+ALICE: That was a long time ago.
+Ehsan: Where are you now? Heaven?
+ALICE: California. Do you have any kids?      --> asking an irrelevant question, I'm pretty sure it's randomly soming from a list of questions
+Ehsan: What does make you to think about this question?
+ALICE: What do you think it does?
+Ehsan: Take care
+ALICE: Thanks. You too, Ehsan.
+Ehsan: bye
+ALICE: TTYL, Ehsan.
+Ehsan: What's my name again?
+ALICE: You said your name is Ehsan?
+Ehsan: I live in Oakland
+ALICE: What is it like living in Oakland?
+Ehsan: I am lying to you
+ALICE: Please tell the truth.
+Ehsan: you are lying too
+ALICE: No I'm telling the truth.
+Ehsan: How should I beleive that?
+ALICE: What is it to you.
+Do a web search for it.    --> It's inviting me a lot to look in the web for my answers. This way it tries to escape
+Ehsan: Web is full of lies
+ALICE: The Web fulfills Leibniz' dream.
+
+
